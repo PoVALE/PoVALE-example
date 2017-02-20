@@ -16,6 +16,8 @@ import javafx.application.Application;
 public class Main {
 
     private static Environment environment;
+    private static MainApp mainApp;
+    private static FXMLController controller;
 
     public static void main(String[] args) {
         //launch(args);
@@ -39,15 +41,16 @@ public class Main {
 
         List<Assertion> asserts = parser.getMyAsserts();
 
-        FXMLController controller = new FXMLController();
+        controller = new FXMLController();
         
         controller.setEnvironment(environment);
+        
         controller.setAssertions(asserts);
         
-        MainApp ms = new MainApp();
+        MainApp main = new MainApp();
         
-        ms.setController(controller);
-
+        main.setController(controller);
+        
         Application.launch(MainApp.class, args);
 
     }
