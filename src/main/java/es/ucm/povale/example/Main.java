@@ -7,6 +7,7 @@ import es.ucm.povale.environment.Environment;
 import es.ucm.povale.plugin.Import;
 import es.ucm.povale.views.FXMLController;
 import es.ucm.povale.views.MainApp;
+import java.io.InputStream;
 import javafx.application.Application;
 
 /**
@@ -18,15 +19,17 @@ public class Main {
     private static Environment environment;
     private static MainApp mainApp;
     private static FXMLController controller;
+    private static List<Assertion> asserts;
 
     public static void main(String[] args) {
-        //launch(args);
 
         environment = new Environment();
 
-        String XMLFile = "src/main/resources/existDocument.xml";
+        //String XMLFile = "src/main/resources/existDocument.xml";
+        InputStream is = Main.class.getClassLoader().getResourceAsStream("existDocument.xml");
+        System.out.println(is);
         XMLParser parser = new XMLParser();
-        parser.parseXMLFile(XMLFile);
+        parser.parseXMLFile(is);
 
         List<String> plugins = parser.getMyPlugins();
         if (!plugins.get(0).equalsIgnoreCase("")) {
@@ -39,17 +42,19 @@ public class Main {
 
         environment.addVariables(parser.getMyVars());
 
-        List<Assertion> asserts = parser.getMyAsserts();
+        asserts = parser.getMyAsserts();
 
+        /*
         controller = new FXMLController();
-        
-        controller.setEnvironment(environment);
         
         controller.setAssertions(asserts);
         
-        MainApp main = new MainApp();
+        controller.setEnvironment(environment);
+        */
         
-        main.setController(controller);
+     //   MainApp main = new MainApp();
+        
+//        main.setController(controller);
         
         Application.launch(MainApp.class, args);
 
